@@ -1,9 +1,11 @@
 #include <stdio.h>
-#include "ext/sdl/SDL.h"
+// #include "HazrdLib/HazrdCore.h"
 
-int main() {
+int main(int argc, char *argv[]) {
 
     printf("hi hazrd\n");
+
+
 
     return 0;
 }

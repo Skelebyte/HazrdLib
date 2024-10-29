@@ -36,6 +36,7 @@
 extern "C" {
 #endif
 
+
 /**
  *  \file SDL_bits.h
  */
