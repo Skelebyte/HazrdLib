@@ -4,5 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-minifb = "0.27.0"
-# sdl2 = "*"
+gl = "0.14.0"
+glad = "0.0.0"
+glfw = "0.58.0"
+
