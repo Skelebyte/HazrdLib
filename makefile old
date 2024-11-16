@@ -1,0 +1,54 @@
+											# ---/ TODO: ALLOW COMPILING FOR WINDOWS \--- #
+
+
+# What this does:
+# It compiles a file called `Hazrd.c` into `out/Hazrd.o`, which contains an #include for each `.c` file in `Hazrd/src/` (this can be changed).
+# The next step is to then compile
+
+# Path to `Hazrd.c`. The parent for `Hazrd.c` should have the `hazrd_src` directory and all Hazrd `.h` files inside.
+HAZRD_DIR = Hazrd/Hazrd.c
+
+# if you multiple `.c` files you wish to compile, use $(wildcard `your/dir/*.c`).
+# e.g `MAIN_PATH = $(wildcard src/*.c)`
+MAIN_PATH = main.c
+
+# e.g `out`, `path/to/prefered/dir`. Do not end with a `/`.
+O_DIR = out
+
+# Name of the of the output. Include and extensions you want/need.
+# e.g. Program.exe, Program, Program.x86_64
+OUTPUT = Program.x86_64
+
+# path of the of the output. Include and extensions you want/need. Do not end with a `/`.
+# e.g. path/to, export, output/built/linux
+OUTPUT_DIR = export
+
+export: $(O_DIR)/main.o $(O_DIR)/Hazrd.o
+	mkdir -p $(OUTPUT_DIR)
+	cc $(O_DIR)/*.o -o $(OUTPUT_DIR)/$(OUTPUT) -lglfw
+	chmod +x $(OUTPUT_DIR)/$(OUTPUT)
+#	rm -f $(O_DIR)/*.o
+#   ^ uncomment above if you want to remove all the `.o` files after compilation.
+
+$(O_DIR)/main.o: $(MAIN_PATH) $(O_DIR)/Hazrd.o
+	cc -c main.c -o out/main.o
+
+$(O_DIR)/Hazrd.o:
+	mkdir -p $(O_DIR)
+	cc -c $(HAZRD_DIR) -o out/Hazrd.o
+
+$(MAIN_PATH):
+	echo "int main() { return 0; }" > main.c
+
+print_dirs:
+	@echo Harzd.c directory:.............$(HAZRD_DIR)
+	@echo Main project code directory:...$(MAIN_PATH)
+	@echo .o output directory:...........$(O_DIR)
+
+cleanall: # $(O_DIR)/Hazrd.o $(O_DIR)/main.o export
+	rm -rf $(O_DIR)
+	rm -rf $(OUTPUT_DIR)
+
+cleanfiles: $(O_DIR)/Hazrd.o $(O_DIR)/main.o export
+	rm -f $(O_DIR)/*.o
+	rm -f $(OUTPUT_DIR)/$(OUTPUT)
